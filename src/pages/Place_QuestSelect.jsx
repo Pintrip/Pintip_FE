@@ -103,6 +103,14 @@ function Place_QuestSelect() {
     setCurrentCard(index);
   };
 
+  const handleSelectCombination = () => {
+    const selectedCard = imageCards[currentCard];
+
+    localStorage.setItem("selectedImageCard", JSON.stringify(selectedCard));
+
+    navigate("/sectioncreate");
+  };
+
   return (
     <div className="min-h-screen bg-[#FFFFFF] relative overflow-hidden">
       <div
@@ -218,7 +226,7 @@ function Place_QuestSelect() {
                 >
                   <div className="relative w-[280px] h-[400px] rounded-[16px] overflow-hidden">
                     <img
-                      src="/place_big_ex.png"
+                      src={`/neighborhood/Image/Image/${card.imageFile}`}
                       alt={card.imageHeadline}
                       className="w-full h-full object-cover"
                     />
