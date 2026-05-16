@@ -9,38 +9,34 @@ import Review from "./pages/Review";
 import Mission from "./pages/Mission";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    Component: Landing,
-  },
-  {
-    path: "/place-quest-select",
-    Component: Place_QuestSelect,
-  },
-  {
-    path: "/sectioncreate",
-    Component: SectionCreate,
-  },
-  {
-    path: "/record",
-    Component: Record,
-  },
-  {
-    path: "/review",
-    Component: Review,
-  },
-  {
-    path: "/finish",
-    Component: () => <div>Finish 페이지 준비 중</div>,
-  },
-  {
-    path: "/mission",
-    Component: Mission,
-  },
-  {
-    path: "/completion",
-    Component: CompletionCard,
-  },
+    {
+        path: '/',
+        Component: Landing,
+    },
+    {
+        path: '/place-quest-select',
+        Component: Place_QuestSelect,
+    },
+    {
+        path: '/sectioncreate',
+        Component: SectionCreate,
+    },
+    {
+        path: '/record',
+        Component: Record,
+    },
+    {
+        path: '/review',
+        Component: Review,
+    },
+    {
+        path: '/mission',
+        Component: Mission,
+    },
+    {
+      path: "/finish",
+      Component: CompletionCard,
+    }
 ]);
 
 function App() {
