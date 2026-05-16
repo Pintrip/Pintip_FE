@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Button from "../components/Button";
 
 function SectionCreate() {
+  const navigate = useNavigate();
+
   return (
     <div className="w-screen h-screen bg-[#FFFFFF] flex flex-col overflow-hidden">
       <div className="shrink-0 bg-[#FFFFFF]">
@@ -107,7 +110,7 @@ function SectionCreate() {
       </div>
 
       <div className="shrink-0 bg-[#FFFFFF] p-3">
-        <Button className="w-full">세션 만들고 시작하기</Button>
+        <Button className="w-full" onClick={() => navigate("/record")}>세션 만들고 시작하기</Button>
       </div>
     </div>
   );
