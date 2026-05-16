@@ -33,12 +33,12 @@ function Review() {
     };
 
     return (
-        <div className="w-screen h-screen bg-[#FFFFFF] flex flex-col overflow-hidden">
+        <div className="w-screen h-screen bg-[#FFFFFF] flex flex-col overflow-hidden p-5">
             <div className="shrink-0 bg-[#FFFFFF]">
                 <Header title="여행 후기 작성" />
             </div>
 
-            <div className="flex flex-col gap-1 pl-1">
+            <div className="flex flex-col gap-1 p-4 bg-orange-1 mt-5" style={{borderRadius: 16}}>
               {COMPLETED_QUESTS.map((quest) => (
                 <div key={quest} className="flex items-center gap-2">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
@@ -51,7 +51,7 @@ function Review() {
                     />
                   </svg>
 
-                  <p className="text-body-5 text-grey-4">{quest}</p>
+                  <p className="text-body-5 text-grey-9">{quest}</p>
                 </div>
               ))}
             </div>
