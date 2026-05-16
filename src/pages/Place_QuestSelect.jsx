@@ -193,7 +193,7 @@ function Place_QuestSelect() {
               ref={scrollRef}
               onScroll={handleScroll}
               className="
-                mt-[36px]
+                mt-[40px]
                 flex
                 overflow-x-auto
                 overflow-y-hidden
