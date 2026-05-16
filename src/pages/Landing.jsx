@@ -1,6 +1,7 @@
 
 import { useRef, useState } from 'react'
 import Button from '../components/Button';
+import Card from '../components/Card';
 
 function Landing() {
     const sliderRef = useRef(null)
@@ -53,18 +54,9 @@ function Landing() {
                     onMouseLeave={stopDragging}
                     onScroll={onScroll}
                 >
-                    <div className='w-60 h-80 p-4 bg-[#fff] rounded-[20px] inline-flex flex-col justify-end items-start gap-1 overflow-hidden mr-[10px] shrink-0 snap-center'>
-                        <span className='font-semibold text-base'>동 선택</span>
-                        <span className='font-medium text-sm text-grey-6'>탐색할 지역을 선택하세요.</span>
-                    </div>
-                    <div className='w-60 h-80 p-4 bg-[#fff] rounded-[20px] inline-flex flex-col justify-end items-start gap-1 overflow-hidden mr-[10px] shrink-0 snap-center'>
-                        <span className='font-semibold text-base'>랜덤 퀘스트</span>
-                        <span className='font-medium text-sm text-grey-6'>예측 불가능한 미션</span>
-                    </div>
-                    <div className='w-60 h-80 p-4 bg-[#fff] rounded-[20px] inline-flex flex-col justify-end items-start gap-1 overflow-hidden shrink-0 snap-center'>
-                        <span className='font-semibold text-base'>여행 기록</span>
-                        <span className='font-medium text-sm text-grey-6'>나만의 발자취 저장</span>
-                    </div>
+                    <Card title='동 선택' text='탐색할 지역을 선택하세요.' />
+                    <Card title='랜덤 퀘스트' text='예측 불가능한 미션' />
+                    <Card title='여행 기록' text='나만의 발자취 저장' />
                 </div>
                 <div className="flex justify-center items-center gap-1.5 mt-3">
                     <div className={`size-2 rounded-md ${activeIndex === 0 ? 'bg-orange-6' : 'bg-white'}`} />
