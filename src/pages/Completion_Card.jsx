@@ -35,9 +35,9 @@ function CompletionCard() {
     const tickets = ticketStore((state) => state.tickets);
 
     return (
-        <div className='bg-grey-1 w-full h-full flex flex-col justify-center items-center'>
+        <div className='bg-grey-1 min-h-screen w-full flex flex-col'>
             <div className='font-semibold text-xl text-[#242424] mt-15' style={{paddingTop: 9, paddingBottom: 9, width: '100%', textAlign: 'center'}}>핀트립 완료 카드</div>
-            <div className='w-full h-screen scrollbar-none overflow-y-auto flex flex-col justify-start items-center'>
+            <div className='flex-1 w-full overflow-y-auto scrollbar-none flex flex-col justify-start items-center pb-32'>
                 <Ticket imageUrl={tickets[0]?.imageUrl} location={tickets[0]?.location} title={tickets[0]?.title} quests={tickets[0]?.quests} found={tickets[0]?.found} review={tickets[0]?.review} chips={tickets[0]?.chips}/>
             </div>
             <div className='bg-grey-1 p-[10px] box-border' style={{width: 'calc(100% - 40px)', zIndex: 2, position: 'fixed', bottom: 0}}>

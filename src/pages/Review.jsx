@@ -55,85 +55,82 @@ function Review() {
                 </div>
               ))}
             </div>
-          </div>
 
-          {/* 입력 폼 */}
-          <div className="flex flex-col gap-5">
-            <div className="flex flex-col gap-2">
-              <div className="flex items-center gap-1">
-                <img src="/visibility.svg" alt="눈" className="w-5 h-5" />
+            {/* 입력 폼 */}
+            <div className="flex flex-col gap-5 px-5 py-4">
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-1">
+                  <img src="/visibility.svg" alt="눈" className="w-5 h-5" />
 
-                <p className="text-body-5 text-grey-4">발견한 것</p>
+                  <p className="text-body-5 text-grey-4">발견한 것</p>
+                </div>
+
+                <TextField
+                  placeholder="발견한 것을 짧게 적어주세요"
+                  value={discovery}
+                  onChange={(e) => setDiscovery(e.target.value)}
+                />
               </div>
 
-              <TextField
-                placeholder="발견한 것을 짧게 적어주세요"
-                value={discovery}
-                onChange={(e) => setDiscovery(e.target.value)}
-              />
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-1">
+                  <img src="/text.svg" alt="텍스트" className="w-5 h-5" />
+
+                  <p className="text-body-5 text-grey-4">짧은 후기</p>
+                </div>
+
+                <TextArea
+                  placeholder="이곳에서의 경험은 어땠나요?"
+                  rows={4}
+                  value={review}
+                  onChange={(e) => setReview(e.target.value)}
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-1">
+                  <img src="/mood.svg" alt="무드" className="w-5 h-5" />
+
+                  <p className="text-body-5 text-grey-4">이 장소는 어땠나요?</p>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  {CHIPS.map((label) => (
+                    <Chip
+                      key={label}
+                      label={label}
+                      selected={selectedChips.includes(label)}
+                      onClick={() => toggleChip(label)}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
 
-            <div className="flex flex-col gap-2">
-              <div className="flex items-center gap-1">
-                <img src="/text.svg" alt="텍스트" className="w-5 h-5" />
-
-                <p className="text-body-5 text-grey-4">짧은 후기</p>
-              </div>
-
-              <TextArea
-                placeholder="이곳에서의 경험은 어땠나요?"
-                rows={4}
-                value={review}
-                onChange={(e) => setReview(e.target.value)}
-              />
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex justify-center w-full">
+              <Button
+                onClick={() => {
+                  insertTicket({
+                    imageUrl: previewUrl,
+                    location: DISTRICT,
+                    title: PLACE,
+                    quests: COMPLETED_QUESTS,
+                    found: discovery,
+                    review: review,
+                    chips: selectedChips,
+                  });
+                  navigate('/finish');
+                }}
+                style={{
+                  borderRadius: 16,
+                  width: "calc(100% - 40px)",
+                }}
+              >
+                퀘스트 완료하기
+              </Button>
             </div>
-
-            <div className="flex flex-col gap-2">
-              <div className="flex items-center gap-1">
-                <img src="/mood.svg" alt="무드" className="w-5 h-5" />
-
-                <p className="text-body-5 text-grey-4">이 장소는 어땠나요?</p>
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                {CHIPS.map((label) => (
-                  <Chip
-                    key={label}
-                    label={label}
-                    selected={selectedChips.includes(label)}
-                    onClick={() => toggleChip(label)}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex justify-center w-full">
-        <Button
-          onClick={() => {
-                        insertTicket({
-                            imageUrl: previewUrl,
-                            location: DISTRICT,
-                            title: PLACE,
-                            quests: COMPLETED_QUESTS,
-                            found: discovery,
-                            review: review,
-                            chips: selectedChips,
-                        })
-                        navigate('/finish')
-                    }}
-          style={{
-            borderRadius: 16,
-            width: "calc(100% - 40px)",
-          }}
-        >
-          퀘스트 완료하기
-        </Button>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default Review;
