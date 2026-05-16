@@ -217,8 +217,7 @@ function Landing() {
           borderRadius: 16,
           position: "absolute",
           bottom: 12,
-          left: 20,
-          right: 20,
+          width: "calc(100% - 40px)",
           boxSizing: "border-box",
         }}
         onClick={handleStart}

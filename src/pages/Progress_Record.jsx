@@ -167,7 +167,7 @@ function Record() {
       </div>
 
       {/* footer 버튼 */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex justify-center w-full">
+      <div className="fixed bottom-3 left-1/2 -translate-x-1/2 flex justify-center w-full">
         <Button
           onClick={() => navigate("/review")}
           style={{

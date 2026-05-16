@@ -175,9 +175,9 @@ function Place_QuestSelect() {
                   }}
                 >
                   <img
-                    src="/place_small_ex.png"
+                    src={["/Seongsu-Q01-Q05-Q18.jpg", "/Seongsu-Q02-Q04-Q11.jpg", "/Seongsu-Q03-Q14-Q15.png"][index]}
                     alt={place.name}
-                    className="w-[60px] h-[60px] rounded-[12px] ml-3"
+                    className="w-[60px] h-[60px] rounded-[12px] ml-3 object-cover"
                   />
 
                   <div className="ml-3 flex flex-col justify-center">
@@ -189,7 +189,7 @@ function Place_QuestSelect() {
 
                     <div className="h-4 flex items-center">
                       <p className="text-[12px] text-[#5E5E5E]">
-                        비주류 감성 여행지
+                        {["힙한 숨은 여행지", "언더그라운드 감성 스팟", "로컬 감성 여행지"][index]}
                       </p>
                     </div>
                   </div>

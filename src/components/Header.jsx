@@ -7,7 +7,7 @@ function Header({ title, hideBackButton = false }) {
     <div className="relative h-14 flex items-center px-[25px]">
       <button
         onClick={() => navigate(-1)}
-        className={`w-6 h-6 flex items-center justify-center ${
+        className={`relative z-10 w-6 h-6 flex items-center justify-center ${
           hideBackButton ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
       >
