@@ -7,7 +7,7 @@ function Ticket({imageUrl='', location='', title='', quests=[], found='', review
         <div>
             <div className='bg-repeat w-80 h-[7px]' style={{backgroundImage: "url('/ticket_triangle.png')"}}></div>
             <div className='w-80 bg-[#fff] flex flex-col p-4'>
-                <div className='bg-no-repeat bg-cover' style={{backgroundImage: `url(${imageUrl})`}} />
+                <div className='bg-no-repeat bg-cover w-full h-50 bg-center' style={{backgroundImage: imageUrl? `url(${imageUrl})` : 'url(/alternative_image.png)', borderRadius: 16}} />
                 <div className='flex flex-col mb-2'>
                     <span className='font-medium text-[14px] text-grey-5'>{location}</span>
                     <span className='font-semibold text-[20px] text-[#242424]'>{title}</span>
