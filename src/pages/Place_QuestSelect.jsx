@@ -9,6 +9,7 @@ function Place_QuestSelect() {
   const navigate = useNavigate();
 
   const scrollRef = useRef(null);
+  console.log("Place_QuestSelect: render start");
 
   const places = JSON.parse(localStorage.getItem("randomDongs")) || [];
 
@@ -105,8 +106,10 @@ function Place_QuestSelect() {
 
   const handleSelectCombination = () => {
     const selectedCard = imageCards[currentCard];
+    console.log("Place_QuestSelect: selected card", { selectedCard, currentCard });
 
     localStorage.setItem("selectedImageCard", JSON.stringify(selectedCard));
+    console.log("Place_QuestSelect: saved selectedImageCard to localStorage", selectedCard);
 
     navigate("/sectioncreate");
   };

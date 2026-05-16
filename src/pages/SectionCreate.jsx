@@ -5,10 +5,13 @@ import axios from "axios";
 
 function SectionCreate() {
   const navigate = useNavigate();
+  console.log("SectionCreate: render start");
 
   const selectedImageCard = JSON.parse(
     localStorage.getItem("selectedImageCard"),
   );
+
+  console.log("SectionCreate: loaded selectedImageCard from localStorage", selectedImageCard);
 
   const quests = selectedImageCard?.quests || [];
 
@@ -19,6 +22,13 @@ function SectionCreate() {
   ];
 
   const handleCreateSession = async () => {
+    console.log("SectionCreate: handleCreateSession start", { selectedImageCard });
+    if (!selectedImageCard) {
+      console.error("SectionCreate: selectedImageCard is missing in localStorage.");
+      navigate("/");
+      return;
+    }
+
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/trip-sessions`,
@@ -28,8 +38,10 @@ function SectionCreate() {
         },
       );
 
-      localStorage.setItem("tripSessionId", response.data.sessionId);
+      console.log("SectionCreate: trip-sessions POST response", response.data);
 
+      localStorage.setItem("tripSessionId", response.data.sessionId);
+      localStorage.setItem("sessionId", response.data.sessionId);
       localStorage.setItem("tripSession", JSON.stringify(response.data));
 
       navigate("/record");

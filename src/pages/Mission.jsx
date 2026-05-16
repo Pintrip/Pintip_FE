@@ -1,10 +1,11 @@
-import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Button from '../components/Button';
 import Chip from '../components/Chip';
 import Header from '../components/Header';
 import TextArea from '../components/TextArea';
 import TextField from '../components/TextField';
+import axios from 'axios';
 
 const CHIPS = ['낯설었다', '조용했다', '다시 가고 싶다', '생각보다 좋았다'];
 
@@ -13,16 +14,66 @@ const QUEST = '가장 조용한 골목 찾기';
 
 function Mission() {
     const navigate = useNavigate();
+    const location = useLocation();
     const [previewUrl, setPreviewUrl] = useState(null);
     const [selectedChips, setSelectedChips] = useState([]);
     const [discovery, setDiscovery] = useState('');
     const [review, setReview] = useState('');
+    const [questData, setQuestData] = useState(null);
     const fileInputRef = useRef(null);
+
+    useEffect(() => {
+      console.log("Mission: location.state", location.state);
+      if (location.state?.quest) {
+        setQuestData(location.state.quest);
+      }
+    }, [location.state]);
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (!file) return;
         setPreviewUrl(URL.createObjectURL(file));
+    };
+
+    const handleSubmit = async () => {
+        const sessionId = localStorage.getItem('sessionId') || localStorage.getItem('tripSessionId');
+        const questId = questData?.questId;
+        const imageCardId = questData?.imageCardId;
+
+        console.log("Mission: submit review", { sessionId, questId, imageCardId, discovery, review, selectedChips, previewUrl });
+
+        if (!sessionId || !questId || !imageCardId) {
+            console.error('Mission: 세션 또는 퀘스트 정보가 없습니다.', { sessionId, questId, imageCardId });
+            navigate('/record');
+            return;
+        }
+
+        try {
+            const response = await axios.put(
+                `${import.meta.env.VITE_API_BASE_URL}/trip-sessions/${sessionId}/quest-reviews/${questId}`,
+                {
+                    imageCardId,
+                    discoveredNote: discovery,
+                    reviewText: review,
+                },
+            );
+            console.log("Mission: PUT response", response.data);
+
+            navigate('/record', {
+                state: {
+                    completed: true,
+                    place: questData.place,
+                    quest: questData.quest,
+                    image: previewUrl,
+                    discovery,
+                    review,
+                    tags: selectedChips,
+                },
+            });
+        } catch (error) {
+            console.error('Review 저장 실패:', error);
+            navigate('/record');
+        }
     };
 
     const toggleChip = (label) => {
@@ -61,8 +112,8 @@ function Mission() {
 
                     {/* 장소 정보 */}
                     <div className="flex flex-col gap-1 pb-4 border-b border-grey-1">
-                        <p className="text-body-5 text-grey-4">{PLACE}</p>
-                        <p className="text-body-2 font-bold">{QUEST}</p>
+                        <p className="text-body-5 text-grey-4">{questData?.place || PLACE}</p>
+                        <p className="text-body-2 font-bold">{questData?.quest || QUEST}</p>
                     </div>
 
                     {/* 입력 폼 */}
@@ -115,19 +166,7 @@ function Mission() {
             <div className="shrink-0 bg-[#FFFFFF] p-3">
                 <Button
                     className="w-full"
-                    onClick={() =>
-                        navigate('/record', {
-                            state: {
-                                completed: true,
-                                place: PLACE,
-                                quest: QUEST,
-                                image: previewUrl,
-                                discovery,
-                                review,
-                                tags: selectedChips,
-                            },
-                        })
-                    }
+                    onClick={handleSubmit}
                 >
                     퀘스트 완료하기
                 </Button>
