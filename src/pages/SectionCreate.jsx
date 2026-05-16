@@ -51,12 +51,12 @@ function SectionCreate() {
   };
 
   return (
-    <div className="w-screen h-screen bg-[#FFFFFF] flex flex-col overflow-hidden">
+    <div className="w-screen h-screen bg-[#FFFFFF] flex flex-col">
       <div className="shrink-0 bg-[#FFFFFF]">
         <Header title="세션 만들기" />
       </div>
 
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 min-h-0 overflow-y-auto">
         <div className="mt-3 px-5 flex flex-col gap-[8px]">
           <h2 className="text-body-3 font-semibold text-[#242424]">
             오늘의 핀트립
