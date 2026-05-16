@@ -54,9 +54,15 @@ function Landing() {
                     onMouseLeave={stopDragging}
                     onScroll={onScroll}
                 >
-                    <Card title='동 선택' text='탐색할 지역을 선택하세요.' />
-                    <Card title='랜덤 퀘스트' text='예측 불가능한 미션' />
-                    <Card title='여행 기록' text='나만의 발자취 저장' />
+                    <Card title='동 선택' text='탐색할 지역을 선택하세요.' imageUrl={'/select_dong.png'}/>
+                    <Card title='랜덤 퀘스트' text='예측 불가능한 미션' imageUrl={'/random_quest.png'}/>
+                    <Card title='여행 기록' text='나만의 발자취 저장'>
+                        <div className='flex flex-row overflow-x-auto scrollbar-none'>
+                            <img src='/trip_record1.png' className='mr-[10px]'/>
+                            <img src='/trip_record2.png' className='mr-[10px]'/>
+                            <img src='/trip_record3.png' />
+                        </div>
+                    </Card>
                 </div>
                 <div className="flex justify-center items-center gap-1.5 mt-3">
                     <div className={`size-2 rounded-md ${activeIndex === 0 ? 'bg-orange-6' : 'bg-white'}`} />
