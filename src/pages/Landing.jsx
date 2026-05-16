@@ -1,7 +1,8 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "../components/Button";
 import Card from "../components/Card";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Landing() {
   const sliderRef = useRef(null);
@@ -10,6 +11,68 @@ function Landing() {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const initialize = async () => {
+      try {
+        const sessionId = localStorage.getItem("sessionId");
+
+        if (sessionId) {
+          try {
+            const sessionResponse = await axios.get(
+              `${import.meta.env.VITE_API_BASE_URL}/trip-sessions`,
+              {
+                headers: {
+                  "X-Session-Id": sessionId,
+                },
+              },
+            );
+
+            console.log(sessionResponse.data);
+
+            if (
+              sessionResponse.data &&
+              sessionResponse.data.status === "ACTIVE"
+            ) {
+              navigate("/record");
+
+              return;
+            }
+          } catch (error) {
+            console.error(error);
+
+            localStorage.removeItem("sessionId");
+          }
+        }
+
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/dongs`,
+        );
+
+        console.log(response.data);
+
+        if (!Array.isArray(response.data)) {
+          console.error("response.data가 배열이 아님");
+
+          return;
+        }
+
+        const activeDongs = response.data.filter((dong) => dong.active);
+
+        const shuffled = [...activeDongs].sort(() => 0.5 - Math.random());
+
+        const selectedThree = shuffled.slice(0, 3);
+
+        localStorage.setItem("randomDongs", JSON.stringify(selectedThree));
+
+        console.log(selectedThree);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    initialize();
+  }, [navigate]);
+
   const onScroll = () => {
     const cardWidth = 240;
     const gap = 16;
@@ -17,6 +80,10 @@ function Landing() {
     const index = Math.round(sliderRef.current.scrollLeft / (cardWidth + gap));
 
     setActiveIndex(index);
+  };
+
+  const handleStart = () => {
+    navigate("/place-quest-select");
   };
 
   return (
@@ -46,14 +113,20 @@ function Landing() {
       <div className="w-full flex flex-col items-center gap-[4px]">
         <span
           className="font-semibold text-xl"
-          style={{ textAlign: "center", color: "#242424" }}
+          style={{
+            textAlign: "center",
+            color: "#242424",
+          }}
         >
           평범한 장소를
         </span>
 
         <span
           className="font-semibold text-xl"
-          style={{ textAlign: "center", color: "#242424" }}
+          style={{
+            textAlign: "center",
+            color: "#242424",
+          }}
         >
           오늘만의 비주류 여행지로
         </span>
@@ -108,7 +181,9 @@ function Landing() {
               <div className="flex-1 flex items-center">
                 <div className="flex flex-row">
                   <img src="/trip_record1.png" className="mr-[10px]" />
+
                   <img src="/trip_record2.png" className="mr-[10px]" />
+
                   <img src="/trip_record3.png" />
                 </div>
               </div>
@@ -145,7 +220,7 @@ function Landing() {
           boxSizing: "border-box",
           width: "calc(100% - 40px)",
         }}
-        onClick={() => navigate("/place-quest-select")}
+        onClick={handleStart}
       >
         핀트립 시작하기
       </Button>
