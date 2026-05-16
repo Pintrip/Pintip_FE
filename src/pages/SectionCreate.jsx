@@ -19,7 +19,7 @@ function SectionCreate() {
           </p>
         </div>
 
-        <div className="mt-[36px] px-5 pb-[20px] flex flex-col gap-[8px]">
+        <div className="mt-[36px] px-5 pb-[10px] flex flex-col gap-[8px]">
           <div className="min-h-[194px] rounded-[16px] bg-orange-0 p-4 box-border overflow-hidden">
             <div className="flex flex-col h-full">
               <div className="h-[28px] flex items-center">
