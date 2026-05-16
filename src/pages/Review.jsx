@@ -5,6 +5,7 @@ import Chip from '../components/Chip';
 import Header from '../components/Header';
 import TextArea from '../components/TextArea';
 import TextField from '../components/TextField';
+import ticketStore from '../stores/TicketStore';
 
 const CHIPS = ['낯설었다', '조용했다', '다시 가고 싶다', '생각보다 좋았다'];
 
@@ -19,6 +20,7 @@ function Review() {
     const [discovery, setDiscovery] = useState('');
     const [review, setReview] = useState('');
     const fileInputRef = useRef(null);
+    const insertTicket = ticketStore((state) => state.insertTicket);
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -132,7 +134,18 @@ function Review() {
             <div className="shrink-0 bg-[#FFFFFF] p-3">
                 <Button
                     className="w-full"
-                    onClick={() => navigate('/finish')}
+                    onClick={() => {
+                        insertTicket({
+                            imageUrl: previewUrl,
+                            location: DISTRICT,
+                            title: PLACE,
+                            quests: COMPLETED_QUESTS,
+                            found: discovery,
+                            review: review,
+                            chips: selectedChips,
+                        })
+                        navigate('/finish')
+                    }}
                 >
                     퀘스트 완료하기
                 </Button>

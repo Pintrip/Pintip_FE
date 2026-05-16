@@ -34,15 +34,11 @@ const router = createBrowserRouter([
         Component: Review,
     },
     {
-        path: '/finish',
-        Component: () => <div>Finish 페이지 준비 중</div>,
-    },
-    {
         path: '/mission',
         Component: Mission,
     },
     {
-      path: "/completion",
+      path: "/finish",
       Component: CompletionCard,
     }
 ]);
