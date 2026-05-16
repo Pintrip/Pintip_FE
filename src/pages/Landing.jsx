@@ -157,7 +157,7 @@ function Landing() {
           </div>
 
           <div
-            className={`w-[240px] snap-center shrink-0 transition-all duration-500 ${
+            className={`snap-center shrink-0 transition-all duration-500 ${
               activeIndex === 1
                 ? "scale-100 opacity-100"
                 : "scale-[0.92] opacity-40"
