@@ -1,7 +1,7 @@
 import Button from '../components/Button';
 import { useRef, useState } from 'react'
 import QuestItem from '../components/QuestItem';
-import QuestDong from '../components/Questdong';
+import QuestDong from '../components/QuestDong';
 
 function Record() {
     const sliderRef = useRef(null)
