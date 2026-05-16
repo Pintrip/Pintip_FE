@@ -16,7 +16,6 @@ function CompletionCard() {
             <div className='font-semibold text-xl text-[#242424] mt-15' style={{paddingTop: 9, paddingBottom: 9, width: '100%', textAlign: 'center'}}>핀트립 완료 카드</div>
             <div className='w-full h-screen scrollbar-none overflow-y-auto flex flex-col justify-start items-center'>
                 <Ticket />
-                <Ticket />
             </div>
             <div className='bg-grey-1 p-[10px] box-border' style={{width: 'calc(100% - 40px)', zIndex: 2, position: 'fixed', bottom: 0}}>
                 <Button style={{width: '100%', marginBottom: 8}}>카드 저장하기</Button>
