@@ -75,17 +75,6 @@ function BottomSheet({
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
       >
-        {/* 드래그 핸들 */}
-        <div
-          style={{
-            width: 40,
-            height: 4,
-            background: "#c8c6c5",
-            borderRadius: 2,
-            margin: "0 auto 16px",
-          }}
-        />
-
         {/* 닫기 버튼 */}
         <button
           onClick={onClose}
@@ -110,6 +99,7 @@ function BottomSheet({
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              marginTop: 20,
               marginBottom: 20,
             }}
           >
