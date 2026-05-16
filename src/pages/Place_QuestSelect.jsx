@@ -128,7 +128,7 @@ function Place_QuestSelect() {
           <div className="flex flex-col">
             <p className="text-caption-2 font-medium text-grey-5 leading-[20px] transition-all duration-500">
               {showResult
-                ? "장소 후보 3개와"
+                ? "동네의 테마들을 보고"
                 : "3개의 장소 중 랜덤으로 한 곳이 결정됩니다."}
             </p>
 
@@ -140,7 +140,7 @@ function Place_QuestSelect() {
               }`}
             >
               <p className="text-caption-2 font-medium text-grey-5 leading-[20px]">
-                각 장소별 랜덤 퀘스트 3개가 생성되었습니다.
+                이번 핀트립의 퀘스트를 만나보세요
               </p>
             </div>
           </div>
