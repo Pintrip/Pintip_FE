@@ -5,11 +5,16 @@ import heroImg from './assets/hero.png'
 import './App.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Landing from './pages/Landing'
+import Record from './pages/Progress_Record'
 
 const router = createBrowserRouter([
   {
     path: '/',
     Component: Landing,
+  },
+  {
+    path: '/record',
+    Component: Record,
   }
 ])
 
