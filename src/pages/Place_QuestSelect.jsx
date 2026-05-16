@@ -255,14 +255,14 @@ function Place_QuestSelect() {
         )}
       </div>
 
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex justify-center w-full">
+      <div className="absolute bottom-3 left-5 right-5">
         <Button
           onClick={
             showResult ? () => navigate("/sectioncreate") : handleRoulette
           }
+          className="w-full"
           style={{
             borderRadius: 16,
-            width: "calc(100% - 40px)",
           }}
         >
           {showResult ? "이 조합 선택하기" : "룰렛 돌리기"}
