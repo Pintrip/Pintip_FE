@@ -6,7 +6,6 @@ import './App.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Landing from './pages/Landing'
 import Record from './pages/Progress_Record'
-import Landing from "./pages/Landing";
 import Place_QuestSelect from "./pages/Place_QuestSelect";
 import SectionCreate from "./pages/SectionCreate";
 
