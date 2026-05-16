@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Landing from "./pages/Landing";
 import Place_QuestSelect from "./pages/Place_QuestSelect";
+import SectionCreate from "./pages/SectionCreate";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,11 @@ const router = createBrowserRouter([
   {
     path: "/place-quest-select",
     Component: Place_QuestSelect,
+  },
+
+  {
+    path: "/sectioncreate",
+    Component: SectionCreate,
   },
 ]);
 

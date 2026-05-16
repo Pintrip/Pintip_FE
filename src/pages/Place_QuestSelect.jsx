@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
+import Header from "../components/Header";
 
 function Place_QuestSelect() {
   const navigate = useNavigate();
@@ -107,19 +108,7 @@ function Place_QuestSelect() {
             : "opacity-100 blur-0 scale-100"
         }`}
       >
-        <div className="relative h-14 flex items-center px-[25px]">
-          <button
-            className={`w-6 h-6 flex items-center justify-center transition-all duration-500 ${
-              showResult ? "opacity-0 pointer-events-none" : "opacity-100"
-            }`}
-          >
-            <img src="/arrow_back_ios.png" alt="뒤로가기" className="w-6 h-6" />
-          </button>
-
-          <h1 className="absolute left-1/2 -translate-x-1/2 text-body-1 font-semibold text-[#242424]">
-            세션 만들기
-          </h1>
-        </div>
+        <Header title="세션 만들기" hideBackButton={showResult} />
 
         <div className="mt-3 px-5 flex flex-col gap-[6px] transition-all duration-500">
           <div className="overflow-hidden">
@@ -252,7 +241,7 @@ function Place_QuestSelect() {
       <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex justify-center w-full">
         <Button
           onClick={
-            showResult ? () => navigate("/sessioncreate") : handleRoulette
+            showResult ? () => navigate("/sectioncreate") : handleRoulette
           }
           style={{ borderRadius: 16, width: "calc(100% - 40px)" }}
         >
