@@ -14,7 +14,7 @@ function Header({ title, hideBackButton = false }) {
         <img src="/arrow_back_ios.png" alt="뒤로가기" className="w-6 h-6" />
       </button>
 
-      <h1 className="absolute left-1/2 -translate-x-1/2 text-body-1 font-semibold text-[#242424]">
+      <h1 className="absolute left-0 right-0 text-center text-body-1 font-semibold text-[#242424]">
         {title}
       </h1>
     </div>
