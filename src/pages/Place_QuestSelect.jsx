@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 
 function Place_QuestSelect() {
   const navigate = useNavigate();
+  const scrollRef = useRef(null);
 
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [activeIndex, setActiveIndex] = useState(null);
   const [isRolling, setIsRolling] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [currentCard, setCurrentCard] = useState(0);
 
   const places = [
     {
@@ -33,6 +35,15 @@ function Place_QuestSelect() {
   ];
 
   const selectedPlace = selectedIndex !== null ? places[selectedIndex] : null;
+
+  const getSubjectParticle = (word) => {
+    const lastChar = word[word.length - 1];
+    const uni = lastChar.charCodeAt(0);
+
+    const hasFinalConsonant = (uni - 44032) % 28 !== 0;
+
+    return hasFinalConsonant ? "이" : "가";
+  };
 
   const handleRoulette = () => {
     if (isRolling) return;
@@ -62,6 +73,7 @@ function Place_QuestSelect() {
         setTimeout(() => {
           setActiveIndex(null);
           setSelectedIndex(finalIndex);
+          setCurrentCard(0);
           setIsRolling(false);
 
           setTimeout(() => {
@@ -77,6 +89,15 @@ function Place_QuestSelect() {
     }, 120);
   };
 
+  const handleScroll = () => {
+    if (!scrollRef.current) return;
+
+    const scrollLeft = scrollRef.current.scrollLeft;
+    const index = Math.round(scrollLeft / 296);
+
+    setCurrentCard(index);
+  };
+
   return (
     <div className="min-h-screen bg-[#FFFFFF] relative overflow-hidden">
       <div
@@ -87,7 +108,11 @@ function Place_QuestSelect() {
         }`}
       >
         <div className="relative h-14 flex items-center px-[25px]">
-          <button className="w-6 h-6 flex items-center justify-center">
+          <button
+            className={`w-6 h-6 flex items-center justify-center transition-all duration-500 ${
+              showResult ? "opacity-0 pointer-events-none" : "opacity-100"
+            }`}
+          >
             <img src="/arrow_back_ios.png" alt="뒤로가기" className="w-6 h-6" />
           </button>
 
@@ -100,7 +125,9 @@ function Place_QuestSelect() {
           <div className="overflow-hidden">
             <h2 className="text-body-3 font-semibold text-[#242424] transition-all duration-500">
               {showResult && selectedPlace
-                ? `${selectedPlace.title}이(가) 뽑혔어요`
+                ? `${selectedPlace.title}${getSubjectParticle(
+                    selectedPlace.title,
+                  )} 뽑혔어요`
                 : "동네 룰렛"}
             </h2>
           </div>
@@ -168,35 +195,57 @@ function Place_QuestSelect() {
             })}
           </div>
         ) : (
-          <div
-            className={`mt-[36px] w-full flex justify-center transition-all duration-[900ms] ease-out ${
-              showResult
-                ? "opacity-100 scale-100 blur-0"
-                : "opacity-0 scale-[0.96] blur-[10px]"
-            }`}
-          >
-            <div className="relative w-[280px] h-[400px] rounded-[16px] overflow-hidden">
-              <img
-                src="/place_big_ex.png"
-                alt="선택된 장소"
-                className="w-full h-full object-cover"
-              />
+          <>
+            <div
+              ref={scrollRef}
+              onScroll={handleScroll}
+              className="mt-[36px] flex overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth px-[48px] gap-[16px] scrollbar-hide"
+            >
+              {places.map((place, index) => (
+                <div
+                  key={index}
+                  className={`snap-center shrink-0 transition-all duration-500 ${
+                    currentCard === index
+                      ? "scale-100 opacity-100"
+                      : "scale-[0.92] opacity-40"
+                  }`}
+                >
+                  <div className="relative w-[280px] h-[400px] rounded-[16px] overflow-hidden">
+                    <img
+                      src="/place_big_ex.png"
+                      alt={place.title}
+                      className="w-full h-full object-cover"
+                    />
 
-              <div className="absolute left-[20px] top-[308px] flex flex-col">
-                <div className="h-7 flex items-center">
-                  <p className="text-body-3 font-semibold text-[#FFFFFF] text-left">
-                    {selectedPlace?.detailTitle}
-                  </p>
-                </div>
+                    <div className="absolute left-[20px] top-[308px] flex flex-col">
+                      <div className="h-7 flex items-center">
+                        <p className="text-body-3 font-semibold text-[#FFFFFF] text-left">
+                          {place.detailTitle}
+                        </p>
+                      </div>
 
-                <div className="mt-[4px]">
-                  <p className="text-caption-2 font-medium text-grey-2 leading-[20px] text-left whitespace-pre-line">
-                    {selectedPlace?.detailDescription}
-                  </p>
+                      <div className="mt-[4px]">
+                        <p className="text-caption-2 font-medium text-grey-2 leading-[20px] text-left whitespace-pre-line">
+                          {place.detailDescription}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
-          </div>
+
+            <div className="mt-[20px] flex items-center justify-center gap-[8px]">
+              {places.map((_, index) => (
+                <div
+                  key={index}
+                  className={`w-[8px] h-[8px] rounded-full transition-all duration-300 ${
+                    currentCard === index ? "bg-orange-5" : "bg-grey-2"
+                  }`}
+                />
+              ))}
+            </div>
+          </>
         )}
       </div>
 
@@ -210,6 +259,19 @@ function Place_QuestSelect() {
           {showResult ? "이 조합 선택하기" : "룰렛 돌리기"}
         </Button>
       </div>
+
+      <style>
+        {`
+          .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+          }
+
+          .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
+        `}
+      </style>
     </div>
   );
 }
