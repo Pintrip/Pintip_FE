@@ -89,7 +89,7 @@ function SectionCreate() {
         </div>
       </div>
 
-      <div className="shrink-0 bg-[#FFFFFF] p-3">
+      <div className="shrink-0 bg-[#FFFFFF] p-3 relative z-10">
         <Button className="w-full" onClick={handleCreateSession}>
           세션 만들고 시작하기
         </Button>
