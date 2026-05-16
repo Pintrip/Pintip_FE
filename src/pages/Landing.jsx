@@ -73,8 +73,6 @@ function Landing() {
             </div>
             <Button style={{borderRadius: 16, position: 'absolute', bottom: 32, boxSizing: 'border-box', width: 'calc(100% - 40px)'}} onClick={() => navigate("/place-quest-select")}>핀트립 시작하기</Button>
         </div>
-      </div>
-    </div>
   );
 }
 
