@@ -1,1 +1,77 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+@theme {
+    --color-orange-0: #fff9f8;
+    --color-orange-1: #ffefeb;
+    --color-orange-2: #ffd9cf;
+    --color-orange-3: #ffbaa9;
+    --color-orange-4: #ff9a80;
+    --color-orange-5: #ff7c5a;
+    --color-orange-6: #ff5f36;
+    --color-orange-7: #d9512e;
+    --color-orange-8: #b54326;
+    --color-orange-9: #91361f;
+    --color-orange-10: #732b18;
+
+    --color-grey-0: #f9f9f9;
+    --color-grey-1: #f2f2f2;
+    --color-grey-2: #e0dfdf;
+    --color-grey-3: #c8c6c5;
+    --color-grey-4: #aeabab;
+    --color-grey-5: #969291;
+    --color-grey-6: #7f7a79;
+    --color-grey-7: #6c6867;
+    --color-grey-8: #5a5756;
+    --color-grey-9: #484645;
+    --color-grey-10: #393736;
+
+    --color-white: #f2f2f2;
+    --color-black: #393736;
+
+    /* font family */
+    --font-sans: 'Pretendard', sans-serif;
+
+    /* Title */
+    --text-title-1: 52px;
+    --text-title-1--line-height: 52px;
+    --text-title-2: 52px;
+    --text-title-2--line-height: 52px;
+
+    /* Headline */
+    --text-headline-1: 28px;
+    --text-headline-1--line-height: 36px;
+    --text-headline-2: 28px;
+    --text-headline-2--line-height: 36px;
+
+    /* Body */
+    --text-body-1: 20px;
+    --text-body-1--line-height: 32px;
+    --text-body-2: 20px;
+    --text-body-2--line-height: 32px;
+    --text-body-3: 18px;
+    --text-body-3--line-height: 28px;
+    --text-body-4: 18px;
+    --text-body-4--line-height: 28px;
+    --text-body-5: 16px;
+    --text-body-5--line-height: 24px;
+    --text-body-6: 16px;
+    --text-body-6--line-height: 24px;
+
+    /* Caption */
+    --text-caption-1: 14px;
+    --text-caption-1--line-height: 20px;
+    --text-caption-2: 14px;
+    --text-caption-2--line-height: 20px;
+    --text-caption-3: 12px;
+    --text-caption-3--line-height: 16px;
+    --text-caption-4: 12px;
+    --text-caption-4--line-height: 16px;
+    --text-caption-5: 10px;
+    --text-caption-5--line-height: 16px;
+    --text-caption-6: 10px;
+    --text-caption-6--line-height: 16px;
+}
+
+* {
+    font-family: 'Pretendard', sans-serif;
+}
