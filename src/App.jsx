@@ -8,6 +8,7 @@ import Landing from './pages/Landing'
 import Record from './pages/Progress_Record'
 import Place_QuestSelect from "./pages/Place_QuestSelect";
 import SectionCreate from "./pages/SectionCreate";
+import CompletionCard from './pages/Completion_Card'
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
     path: "/sectioncreate",
     Component: SectionCreate,
   },
+  {
+    path: "/completion",
+    Component: CompletionCard,
+  }
 ]);
 
 function App() {
