@@ -12,6 +12,12 @@ function SectionCreate() {
 
   const quests = selectedImageCard?.quests || [];
 
+  const recordGuides = [
+    "간단한 기록과 사진으로 오늘의 핀트립을 남겨보세요!",
+    "짧은 글과 사진 한 장으로 이 순간을 기록해보세요!",
+    "느낀 점을 한 줄과 사진으로 담아보세요!",
+  ];
+
   const handleCreateSession = async () => {
     try {
       const response = await axios.post(
@@ -74,7 +80,7 @@ function SectionCreate() {
                   </p>
 
                   <p className="mt-[2px] text-caption-2 font-medium text-grey-10 leading-5 whitespace-normal break-words">
-                    간단한 기록과 사진으로 오늘의 핀트립을 남겨보세요!
+                    {recordGuides[index % recordGuides.length]}
                   </p>
                 </div>
               </div>

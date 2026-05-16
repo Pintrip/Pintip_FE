@@ -265,9 +265,7 @@ function Place_QuestSelect() {
 
       <div className="absolute bottom-3 left-5 right-5">
         <Button
-          onClick={
-            showResult ? () => navigate("/sectioncreate") : handleRoulette
-          }
+          onClick={showResult ? handleSelectCombination : handleRoulette}
           className="w-full"
           style={{
             borderRadius: 16,
