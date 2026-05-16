@@ -1,40 +1,41 @@
-
-import { useRef, useState } from 'react'
-import Button from '../components/Button';
-import Card from '../components/Card';
+import { useRef, useState } from "react";
+import Button from "../components/Button";
+import Card from "../components/Card";
+import { useNavigate } from "react-router-dom";
 
 function Landing() {
-    const sliderRef = useRef(null)
-    const isDragging = useRef(false)
-    const startX = useRef(0)
-    const scrollLeft = useRef(0)
-    const [activeIndex, setActiveIndex] = useState(0)
+  const sliderRef = useRef(null);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const navigate = useNavigate();
 
-    const onScroll = () => {
-        const cardWidth = 240 // w-60
-        const gap = 10       // mr-[10px]
-        const index = Math.round(sliderRef.current.scrollLeft / (cardWidth + gap))
-        setActiveIndex(index)
-    }
+  const onScroll = () => {
+    const cardWidth = 240; // w-60
+    const gap = 10; // mr-[10px]
+    const index = Math.round(sliderRef.current.scrollLeft / (cardWidth + gap));
+    setActiveIndex(index);
+  };
 
-    const onMouseDown = (e) => {
-        isDragging.current = true
-        sliderRef.current.style.cursor = 'grabbing'
-        startX.current = e.pageX - sliderRef.current.offsetLeft
-        scrollLeft.current = sliderRef.current.scrollLeft
-    }
+  const onMouseDown = (e) => {
+    isDragging.current = true;
+    sliderRef.current.style.cursor = "grabbing";
+    startX.current = e.pageX - sliderRef.current.offsetLeft;
+    scrollLeft.current = sliderRef.current.scrollLeft;
+  };
 
-    const onMouseMove = (e) => {
-        if (!isDragging.current) return
-        e.preventDefault()
-        const x = e.pageX - sliderRef.current.offsetLeft
-        sliderRef.current.scrollLeft = scrollLeft.current - (x - startX.current)
-    }
+  const onMouseMove = (e) => {
+    if (!isDragging.current) return;
+    e.preventDefault();
+    const x = e.pageX - sliderRef.current.offsetLeft;
+    sliderRef.current.scrollLeft = scrollLeft.current - (x - startX.current);
+  };
 
-    const stopDragging = () => {
-        isDragging.current = false
-        sliderRef.current.style.cursor = 'grab'
-    }
+  const stopDragging = () => {
+    isDragging.current = false;
+    sliderRef.current.style.cursor = "grab";
+  };
 
     return (
         <div className="w-full h-full p-5 overflow-x-hidden bg-cover bg-center" style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'relative', backgroundImage: 'url(/background.png)'}}>
@@ -70,9 +71,11 @@ function Landing() {
                     <div className={`size-2 rounded-md ${activeIndex === 2 ? 'bg-orange-6' : 'bg-white'}`} />
                 </div>
             </div>
-            <Button style={{borderRadius: 16, position: 'absolute', bottom: 32, boxSizing: 'border-box', width: 'calc(100% - 40px)'}}>핀트립 시작하기</Button>
+            <Button style={{borderRadius: 16, position: 'absolute', bottom: 32, boxSizing: 'border-box', width: 'calc(100% - 40px)'}} onClick={() => navigate("/place-quest-select")}>핀트립 시작하기</Button>
         </div>
-    )
+      </div>
+    </div>
+  );
 }
 
 export default Landing;
