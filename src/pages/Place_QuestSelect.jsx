@@ -94,7 +94,11 @@ function Place_QuestSelect() {
     if (!scrollRef.current) return;
 
     const scrollLeft = scrollRef.current.scrollLeft;
-    const index = Math.round(scrollLeft / 296);
+
+    const cardWidth = 280;
+    const gap = 16;
+
+    const index = Math.round(scrollLeft / (cardWidth + gap));
 
     setCurrentCard(index);
   };
@@ -188,7 +192,18 @@ function Place_QuestSelect() {
             <div
               ref={scrollRef}
               onScroll={handleScroll}
-              className="mt-[36px] flex overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth px-[48px] gap-[16px] scrollbar-hide"
+              className="
+                mt-[36px]
+                flex
+                overflow-x-auto
+                overflow-y-hidden
+                snap-x
+                snap-mandatory
+                scroll-smooth
+                gap-[16px]
+                scrollbar-hide
+                px-[calc(50vw-140px)]
+              "
             >
               {places.map((place, index) => (
                 <div
