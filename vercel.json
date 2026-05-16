@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/backend/:path*",
+      "destination": "http://pintrip-develop-env-1.eba-kzgyhpvp.ap-northeast-2.elasticbeanstalk.com/:path*"
+    }
+  ]
+}
