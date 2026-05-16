@@ -4,6 +4,7 @@ import Button from "../components/Button";
 import BottomSheet from "../components/BottomSheet";
 import QuestItem from "../components/QuestItem";
 import QuestDong from "../components/QuestDong";
+import { api } from "../api/client";
 
 const INITIAL_QUESTS = [
   {
@@ -46,6 +47,65 @@ function Record() {
   const [sheetVisible, setSheetVisible] = useState(false);
   const [sheetCompleted, setSheetCompleted] = useState(false);
   const [selectedQuest, setSelectedQuest] = useState(null);
+  const [dongName, setDongName] = useState('성수동');
+  const [completedCount, setCompletedCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
+
+  useEffect(() => {
+    const fetchSessionDetail = async () => {
+      const sessionId =
+        localStorage.getItem("sessionId") ||
+        localStorage.getItem("tripSessionId");
+
+      console.log("Progress_Record: fetchSessionDetail sessionId", sessionId);
+      if (!sessionId) {
+        console.error("Progress_Record: missing sessionId");
+        navigate("/");
+        return;
+      }
+
+      try {
+        const data = await api.get(`/trip-sessions/${sessionId}`);
+        console.log("Progress_Record: got session detail", data);
+
+        const dong = data.dong?.name || "";
+        setDongName(dong || "성수동");
+        const imageFile = data.selectedImageCard?.imageFile || null;
+        const imageCardId = data.selectedImageCard?.imageCardId || null;
+        const sessionQuests = Array.isArray(data.selectedImageCard?.quests)
+          ? data.selectedImageCard.quests
+          : [];
+        const reviews = Array.isArray(data.reviews) ? data.reviews : [];
+
+        const parsedQuests = sessionQuests.map((quest) => {
+          const matchedReview = reviews.find(
+            (review) => review.questId === quest.questId,
+          );
+
+          return {
+            place: dong,
+            quest: quest.quest,
+            guide: quest.questDescription,
+            questId: quest.questId,
+            imageCardId,
+            image: imageFile ? `/${imageFile}` : "/alternative_image.png",
+            discovery: matchedReview?.discoveredNote || null,
+            review: matchedReview?.reviewText || null,
+            tags: matchedReview?.completed ? ["완료"] : [],
+            completed: quest.completed,
+          };
+        });
+
+        setQuests(parsedQuests);
+        setCompletedCount(parsedQuests.filter((item) => item.completed).length);
+        setTotalCount(parsedQuests.length);
+      } catch (error) {
+        console.error("Failed to load session detail:", error);
+      }
+    };
+
+    fetchSessionDetail();
+  }, [navigate]);
 
   useEffect(() => {
     const state = location.state;
@@ -64,7 +124,7 @@ function Record() {
         state: null,
       });
     }
-  }, []);
+  }, [location.state, navigate]);
 
   const openQuest = (quest) => {
     const hasData = quest.discovery || quest.review || quest.tags?.length;
@@ -99,7 +159,7 @@ function Record() {
         </div>
 
         <div className="mt-[12px] px-[20px]">
-          <QuestDong name="성수동" />
+          <QuestDong name={dongName} />
         </div>
       </div>
 
@@ -110,7 +170,9 @@ function Record() {
             퀘스트 체크리스트
           </span>
 
-          <span className="text-grey-5 text-base font-semibold">1/3</span>
+          <span className="text-grey-5 text-base font-semibold">
+            {completedCount}/{totalCount}
+          </span>
         </div>
 
         <div
@@ -190,7 +252,7 @@ function Record() {
         discovery={selectedQuest?.discovery}
         review={selectedQuest?.review}
         tags={selectedQuest?.tags}
-        onRecord={() => navigate("/mission")}
+        onRecord={() => navigate("/mission", { state: { quest: selectedQuest } })}
       />
     </div>
   );
