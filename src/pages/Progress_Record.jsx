@@ -91,7 +91,7 @@ function Record() {
             image: imageFile ? `/${imageFile}` : "/alternative_image.png",
             discovery: matchedReview?.discoveredNote || null,
             review: matchedReview?.reviewText || null,
-            tags: matchedReview?.completed ? ["완료"] : [],
+            tags: [],
             completed: quest.completed,
           };
         });
