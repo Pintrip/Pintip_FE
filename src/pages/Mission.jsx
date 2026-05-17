@@ -20,6 +20,7 @@ function Mission() {
     const [discovery, setDiscovery] = useState('');
     const [review, setReview] = useState('');
     const [questData, setQuestData] = useState(null);
+    const [errorMsg, setErrorMsg] = useState('');
     const fileInputRef = useRef(null);
 
     useEffect(() => {
@@ -36,6 +37,12 @@ function Mission() {
     };
 
     const handleSubmit = async () => {
+        if (!discovery.trim() || !review.trim() || selectedChips.length === 0) {
+            setErrorMsg('발견한 것, 짧은 후기, 감정 태그를 모두 입력해주세요.');
+            return;
+        }
+        setErrorMsg('');
+
         const sessionId = localStorage.getItem('sessionId') || localStorage.getItem('tripSessionId');
         const questId = questData?.questId;
         const imageCardId = questData?.imageCardId;
@@ -163,7 +170,10 @@ function Mission() {
                 </div>
             </div>
 
-            <div className="shrink-0 bg-[#FFFFFF] p-3">
+            <div className="shrink-0 bg-[#FFFFFF] px-3 pt-1 pb-3">
+                {errorMsg && (
+                    <p className="text-red-500 text-xs text-center mb-2">{errorMsg}</p>
+                )}
                 <Button
                     className="w-full"
                     onClick={handleSubmit}
