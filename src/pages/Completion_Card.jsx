@@ -11,7 +11,9 @@ function Ticket({ imageUrl = '', location = '', title = '', quests = [], found =
             <div className="bg-repeat w-80 h-[7px]" style={{ backgroundImage: "url('/ticket_triangle.png')" }}></div>
 
             <div className="w-80 bg-[#FFFFFF] flex flex-col p-4">
-                <div
+                <img
+                    src="/add_photo.svg"
+                    alt="이미지 추가"
                     className="bg-no-repeat bg-cover w-full h-50 bg-center"
                     style={{
                         backgroundImage: imageUrl ? `url(${imageUrl})` : 'url(/alternative_image.png)',

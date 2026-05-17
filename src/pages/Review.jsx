@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import Chip from '../components/Chip';
@@ -6,12 +6,9 @@ import Header from '../components/Header';
 import TextArea from '../components/TextArea';
 import TextField from '../components/TextField';
 import ticketStore from '../stores/TicketStore';
+import { api } from '../api/client';
 
 const CHIPS = ["낯설었다", "조용했다", "다시 가고 싶다", "생각보다 좋았다"];
-
-const DISTRICT = "성수동";
-const PLACE = "성수동 오래된 공장 골목";
-const COMPLETED_QUESTS = ["가장 조용한 골목 찾기", "낡은 간판 찾기"];
 
 function Review() {
     const navigate = useNavigate();
@@ -19,8 +16,23 @@ function Review() {
     const [selectedChips, setSelectedChips] = useState([]);
     const [discovery, setDiscovery] = useState('');
     const [review, setReview] = useState('');
+    const [sessionData, setSessionData] = useState(null);
+    const [quests, setQuests] = useState([]);
     const fileInputRef = useRef(null);
     const insertTicket = ticketStore((state) => state.insertTicket);
+
+    useEffect(() => {
+        const fetchSession = async () => {
+            try {
+                const data = await api.get('/trip-sessions');
+                setSessionData(data);
+                setQuests(data.selectedImageCard?.quests || []);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchSession();
+    }, []);
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -38,22 +50,24 @@ function Review() {
                 <Header title="여행 후기 작성" />
             </div>
 
-            <div className="flex flex-col gap-1 p-4 bg-orange-1 mt-5" style={{borderRadius: 16}}>
-              {COMPLETED_QUESTS.map((quest) => (
-                <div key={quest} className="flex items-center gap-2">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                    <path
-                      d="M5 13l4 4L19 7"
-                      stroke="#ff5e36"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+            <div className="bg-orange-1 w-full min-h-[112px] p-4 text-orange-6 font-semibold text-[12px]" style={{ borderRadius: 16 }}>
+              <span className="flex flex-row h-[22px] mb-2">
+                <img src="/verified.png" className="pr-1" />
+                완료 퀘스트
+              </span>
 
-                  <p className="text-body-5 text-grey-9">{quest}</p>
-                </div>
-              ))}
+              {quests.filter((q) => q?.completed === true).length > 0 ? (
+                quests
+                  .filter((q) => q?.completed === true)
+                  .map((q, i) => (
+                    <span key={i} className="text-grey-9 font-semibold text-[14px] flex flex-row mt-1">
+                      <img src="/check.png" className="pr-1" />
+                      {q.quest}
+                    </span>
+                  ))
+              ) : (
+                <span className="text-grey-4 text-[14px]">아직 완료한 퀘스트가 없어요</span>
+              )}
             </div>
 
             {/* 입력 폼 */}
@@ -112,9 +126,9 @@ function Review() {
                 onClick={() => {
                   insertTicket({
                     imageUrl: previewUrl,
-                    location: DISTRICT,
-                    title: PLACE,
-                    quests: COMPLETED_QUESTS,
+                    location: sessionData?.dong?.name,
+                    title: sessionData?.selectedImageCard?.imageHeadline,
+                    quests: quests.filter((q) => q?.completed === true).map((q) => q.quest),
                     found: discovery,
                     review: review,
                     chips: selectedChips,
